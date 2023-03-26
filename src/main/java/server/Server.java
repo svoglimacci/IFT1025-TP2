@@ -1,7 +1,8 @@
 package server;
 
 import javafx.util.Pair;
-
+import java.io.FileReader;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -9,7 +10,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
-
+import server.models.Course;
+import server.models.RegistrationForm;
 public class Server {
 
     public final static String REGISTER_COMMAND = "INSCRIRE";
@@ -91,7 +93,32 @@ public class Server {
      @param arg la session pour laquelle on veut récupérer la liste des cours
      */
     public void handleLoadCourses(String arg) {
-        // TODO: implémenter cette méthode
+        ArrayList<Course> courses = new ArrayList<>();
+        ArrayList<Course> filteredCourses = new ArrayList<>();
+        try {
+            BufferedReader in = new BufferedReader(new FileReader("C:\\Users\\Simon\\Desktop\\IFT1025-TP2\\src\\main\\java\\server\\data\\cours.txt"));
+            String str;
+
+            while((str = in.readLine()) != null){
+                String[] parts = str.split("\\s+");
+                String code = parts[0];
+                String name = parts[1];
+                String session = parts[2];
+                Course course = new Course(code, name, session);
+                courses.add(course);
+            }
+
+            for (Course course : courses) {
+                if (course.getSession().equals(arg)) {
+                    filteredCourses.add(course);
+                }
+            }
+
+        objectOutputStream.writeObject(filteredCourses);
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    }
     }
 
     /**
@@ -100,7 +127,7 @@ public class Server {
      La méthode gére les exceptions si une erreur se produit lors de la lecture de l'objet, l'écriture dans un fichier ou dans le flux de sortie.
      */
     public void handleRegistration() {
-        // TODO: implémenter cette méthode
+
     }
 }
 
