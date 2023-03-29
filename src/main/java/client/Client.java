@@ -1,9 +1,5 @@
 package client;
 
-import client.models.Course;
-import client.models.RegistrationForm;
-
-import java.util.ArrayList;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -99,13 +95,12 @@ public class Client {
         System.out.print("Veuillez saisir le code du cours: ");
         String code = sc.next();
 
-        // create new Course from code
-        Course course = new Course("test", "test","test");
+        String registrationForm = firstName + " " + lastName + " " + email + " " + matricule + " " + code;
+        System.out.println("registrationForm sent: " + registrationForm);
 
-        RegistrationForm form = new RegistrationForm(firstName, lastName, email, matricule, code);
-        objectOutputStream.writeObject(form);
-
+        objectOutputStream.writeObject(registrationForm);
         String error = (String) objectInputStream.readObject();
+
         if (error.equals("Course not found")) {
             System.out.println("Le cours " + code + " n'existe pas.");
             return;
@@ -121,3 +116,6 @@ public class Client {
 }
 
 
+/*
+Inscription -> SENT Objet
+ */

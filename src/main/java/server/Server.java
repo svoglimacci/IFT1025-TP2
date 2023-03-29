@@ -1,15 +1,13 @@
 package server;
 
 import javafx.util.Pair;
+import server.models.Course;
 
 import java.io.*;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
-
-import server.models.Course;
-import server.models.RegistrationForm;
 
 public class Server {
 
@@ -108,11 +106,7 @@ public class Server {
                 courses.add(course);
             }
 
-            for (Course course : courses) {
-                if (course.getSession().equals(arg)) {
-                    filteredCourses.add(course);
-                }
-            }
+
             objectOutputStream.writeObject(filteredCourses);
             in.close();
 
@@ -128,29 +122,35 @@ public class Server {
      */
     public void handleRegistration() {
         try {
-            RegistrationForm registrationForm = (RegistrationForm) objectInputStream.readObject();
+            String registrationForm = (String) objectInputStream.readObject();
             FileWriter fileWriter = new FileWriter("src/main/java/server/data/inscription.txt", true);
-            //TODO: getSession() and format registrationForm before .write()
 
-            /* verify that registrationForm course is in cours.txt */
+            String[] parts = registrationForm.split("\\s+");
+            String firstName = parts[0];
+            String lastName = parts[1];
+            String email = parts[2];
+            String matricule = parts[3];
+            String code = parts[4];
+
             BufferedReader in = new BufferedReader(new FileReader("src/main/java/server/data/cours.txt"));
             String str;
+            String result = "Course not found";
             while ((str = in.readLine()) != null) {
-                String[] parts = str.split("\\s+");
-                String code = parts[0];
-                String name = parts[1];
-                String session = parts[2];
-                Course course = new Course(name, code, session);
-                System.out.println(course);
-                System.out.println(registrationForm.getCourse());
-                if (!course.getCode().equals(registrationForm.getCourse().getCode())) {
-                    objectOutputStream.writeObject("Course not found");
-                    return;
+                if (str.startsWith(code)) {
+                    String session = str.split("\\s+")[2];
+                    result = "Course found";
+                    String formToFile = session + "\t" + code + "\t" + matricule + "\t" + firstName + "\t" + lastName + "\t" + email;
+                    fileWriter.write(formToFile + "\n");
+                    System.out.println("Course " + formToFile);
                 }
-                    fileWriter.write(registrationForm.toString());
-                    fileWriter.close();
-                    in.close();
             }
+
+            System.out.println(result);
+            objectOutputStream.writeObject(result);
+            in.close();
+            fileWriter.flush();
+            fileWriter.close();
+
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
