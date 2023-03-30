@@ -1,9 +1,13 @@
 package client;
 
+import server.models.Course;
+import server.models.RegistrationForm;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 
@@ -61,6 +65,7 @@ public class Client {
     }
 
     public static void coursesMenu(Scanner sc, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
+        ArrayList<Course> courses;
 
         System.out.println("Veuillez choisir la session pour laquelle vous voulez consulter la liste des cours:");
         System.out.println("1. Automne");
@@ -77,7 +82,11 @@ public class Client {
         }
         objectOutputStream.writeObject("CHARGER " + choice );
 
-        //TODO: Cast Course and print
+        courses = (ArrayList<Course>) objectInputStream.readObject();
+
+        for (Course course : courses) {
+            System.out.println(course.getCode() + "\t" + course.getName());
+        }
 
     }
 
@@ -95,7 +104,8 @@ public class Client {
         System.out.print("Veuillez saisir le code du cours: ");
         String code = sc.next();
 
-        String registrationForm = firstName + " " + lastName + " " + email + " " + matricule + " " + code;
+        RegistrationForm registrationForm = new RegistrationForm(firstName, lastName, email, matricule, new Course("", code, ""));
+        //String registrationForm = firstName + " " + lastName + " " + email + " " + matricule + " " + code;
         System.out.println("registrationForm sent: " + registrationForm);
 
         objectOutputStream.writeObject(registrationForm);

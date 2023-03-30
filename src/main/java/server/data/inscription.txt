@@ -1,1 +1,4 @@
 Automne	IFT2255	12345678	Michalis	Famelis	mfamelis@iro.umontreal.ca
+Hiver	IFT1025	20002825	Simon	Voglimacci	s.voglimacci@tuta.io
+Automne	IFT1015	200088	Sim	Vog	svogl@g.com
+Hiver	IFT1025	3uj9	Simon	VOgli	33#3

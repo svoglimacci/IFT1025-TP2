@@ -2,6 +2,7 @@ package server;
 
 import javafx.util.Pair;
 import server.models.Course;
+import server.models.RegistrationForm;
 
 import java.io.*;
 import java.net.ServerSocket;
@@ -106,6 +107,11 @@ public class Server {
                 courses.add(course);
             }
 
+            for (Course course : courses) {
+                if (course.getSession().equals(arg)) {
+                    filteredCourses.add(course);
+                }
+            }
 
             objectOutputStream.writeObject(filteredCourses);
             in.close();
@@ -122,24 +128,20 @@ public class Server {
      */
     public void handleRegistration() {
         try {
-            String registrationForm = (String) objectInputStream.readObject();
+            RegistrationForm registrationForm = (RegistrationForm) objectInputStream.readObject();
             FileWriter fileWriter = new FileWriter("src/main/java/server/data/inscription.txt", true);
-
-            String[] parts = registrationForm.split("\\s+");
-            String firstName = parts[0];
-            String lastName = parts[1];
-            String email = parts[2];
-            String matricule = parts[3];
-            String code = parts[4];
-
+            Course course = registrationForm.getCourse();
             BufferedReader in = new BufferedReader(new FileReader("src/main/java/server/data/cours.txt"));
             String str;
             String result = "Course not found";
             while ((str = in.readLine()) != null) {
-                if (str.startsWith(code)) {
+                if (str.startsWith(course.getCode())) {
                     String session = str.split("\\s+")[2];
                     result = "Course found";
-                    String formToFile = session + "\t" + code + "\t" + matricule + "\t" + firstName + "\t" + lastName + "\t" + email;
+                    course.setName(str.split("\\s+")[1]);
+                    course.setSession(session);
+
+                    String formToFile = session + "\t" + course.getCode() + "\t" + registrationForm.getMatricule() + "\t" + registrationForm.getPrenom() + "\t" + registrationForm.getNom() + "\t" + registrationForm.getEmail();
                     fileWriter.write(formToFile + "\n");
                     System.out.println("Course " + formToFile);
                 }
