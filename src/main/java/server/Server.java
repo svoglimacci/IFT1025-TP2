@@ -193,7 +193,7 @@ public class Server {
             String str;
             String result = "Course not found";
             while ((str = in.readLine()) != null) {
-                if (str.startsWith(course.getCode())) {
+                if (str.startsWith(course.getCode()) && str.endsWith(course.getSession())) {
                     String session = str.split("\\s+")[2];
                     result = "Course found";
                     course.setName(str.split("\\s+")[1]);
