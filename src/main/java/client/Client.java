@@ -79,7 +79,7 @@ public class Client {
         switch (sc.nextInt()) {
             case 1 -> choice = "Automne";
             case 2 -> choice = "Hiver";
-            case 3 -> choice = "Été";
+            case 3 -> choice = "Ete";
             default -> System.out.println("Choix invalide");
         }
         objectOutputStream.writeObject("CHARGER " + choice);
