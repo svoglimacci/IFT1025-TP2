@@ -158,8 +158,8 @@ public class Server {
 
             while ((str = in.readLine()) != null) {
                 String[] parts = str.split("\\s+");
-                String code = parts[0];
-                String name = parts[1];
+                String code = parts[1];
+                String name = parts[0];
                 String session = parts[2];
                 Course course = new Course(code, name, session);
                 courses.add(course);
@@ -193,7 +193,7 @@ public class Server {
             String str;
             String result = "Course not found";
             while ((str = in.readLine()) != null) {
-                if (str.startsWith(course.getCode()) && str.endsWith(course.getSession())) {
+                if (str.startsWith(course.getCode())) {
                     String session = str.split("\\s+")[2];
                     result = "Course found";
                     course.setName(str.split("\\s+")[1]);
