@@ -8,6 +8,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
@@ -27,34 +28,39 @@ public class Client {
 
         int menuChoice = 1;
         while (true) {
-            switch (menuChoice) {
-                case 1 -> {
-                    Socket socket = createSocket("localhost", 1337);
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                    ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+            try {
+                switch (menuChoice) {
+                    case 1 -> {
+                        Socket socket = createSocket("localhost", 1337);
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                        ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
 
-                    currentSession = coursesMenu(sc, objectOutputStream, objectInputStream);
+                        currentSession = coursesMenu(sc, objectOutputStream, objectInputStream);
 
+                    }
+                    case 2 -> {
+                        Socket socket = createSocket("localhost", 1337);
+                        ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
+                        ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
+
+                        registerMenu(sc, currentSession, objectOutputStream, objectInputStream);
+
+                    }
+                    case 3 -> {
+
+                        System.out.println("Au revoir!");
+                        return;
+                    }
+                    default -> System.out.println("Choix invalide");
                 }
-                case 2 -> {
-                    Socket socket = createSocket("localhost", 1337);
-                    ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
-                    ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
 
-                    registerMenu(sc, currentSession, objectOutputStream, objectInputStream);
+                mainMenu();
+                menuChoice = sc.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Choix invalide");
+                sc.next();
 
-                }
-                case 3 -> {
-
-                    System.out.println("Au revoir!");
-                    return;
-                }
-                default -> System.out.println("Choix invalide");
             }
-
-            mainMenu();
-
-            menuChoice = sc.nextInt();
 
         }
     }
@@ -74,14 +80,20 @@ public class Client {
         System.out.println("2. Hiver");
         System.out.println("3. Été");
         System.out.print("> Choix: ");
-        String choice = "";
 
-        switch (sc.nextInt()) {
-            case 1 -> choice = "Automne";
-            case 2 -> choice = "Hiver";
-            case 3 -> choice = "Ete";
-            default -> System.out.println("Choix invalide");
+        String choice = "";
+        try {
+            switch (sc.nextInt()) {
+                case 1 -> choice = "Automne";
+                case 2 -> choice = "Hiver";
+                case 3 -> choice = "Ete";
+                default -> System.out.println("Choix invalide");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("Choix invalide");
+            sc.next();
         }
+
         objectOutputStream.writeObject("CHARGER " + choice);
 
         courses = (ArrayList<Course>) objectInputStream.readObject();
