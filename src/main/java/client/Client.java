@@ -49,6 +49,7 @@ public class Client {
                     case 3 -> {
 
                         System.out.println("Au revoir!");
+                        sc.close();
                         return;
                     }
                     default -> System.out.println("Choix invalide");
@@ -61,8 +62,8 @@ public class Client {
                 sc.next();
 
             }
-
         }
+
     }
 
     public static void mainMenu() {
@@ -101,8 +102,10 @@ public class Client {
         for (Course course : courses) {
             System.out.println(course.getCode() + "\t" + course.getName());
         }
-
+        objectOutputStream.close();
+        objectInputStream.close();
         return choice;
+
     }
 
     public static void registerMenu(Scanner sc, String currentSession, ObjectOutputStream objectOutputStream, ObjectInputStream objectInputStream) throws IOException, ClassNotFoundException {
@@ -142,21 +145,24 @@ public class Client {
             }
             if (errors.size() == 0) {
                 validation = false;
-                 System.out.println("registrationForm sent: ");
+                objectOutputStream.writeObject(registrationForm);
+                String error = (String) objectInputStream.readObject();
 
-            objectOutputStream.writeObject(registrationForm);
-            String error = (String) objectInputStream.readObject();
-
-            if (error.equals("Course not found")) {
-                System.out.println("Le cours " + code + " n'existe pas.");
-                return;
-            }
-            System.out.println("Félicitations! Inscription réussie de " + firstName + " au cours " + code + ".");
-
+                if (error.equals("Course not found")) {
+                    System.out.println("Le cours " + code + " n'existe pas.");
+                    objectOutputStream.close();
+                    objectInputStream.close();
+                    return;
+                }
+                System.out.println("Félicitations! Inscription réussie de " + firstName + " au cours " + code + ".");
+                objectOutputStream.close();
+                objectInputStream.close();
             } else {
                 System.out.println("Les erreurs suivantes ont été détectées:");
                 for (String error : errors) {
                     System.out.println(error);
+                    objectOutputStream.close();
+                    objectInputStream.close();
                 }
                 errors.clear();
             }
