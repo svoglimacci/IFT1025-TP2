@@ -1,14 +1,16 @@
 package client_fx;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-
 public class clientController {
-    @FXML
-    private Label welcomeText;
+    @FXML private Label label;
+    @FXML private Button button;
 
     @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to JavaFX Application!");
+    protected void handleButtonPress() {
+        button.setVisible(false);
+        label.setVisible(true);
     }
 
 }
