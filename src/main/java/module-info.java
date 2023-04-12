@@ -4,7 +4,7 @@ module Server {
 
     opens server.models to javafx.fxml;
 
-    opens client_fx to javafx.fxml;
-    exports client_fx;
+    opens client.client_fx to javafx.fxml;
+    exports client.client_fx;
     exports server.models;
 }

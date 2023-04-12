@@ -18,7 +18,6 @@ import java.util.Arrays;
  */
 
 /**
- *
  * La classe Serveur est une implémentation d'un serveur qui écoute les connexions entrantes des clients et traite leurs demandes.
  */
 public class Server {
@@ -26,10 +25,10 @@ public class Server {
     public final static String REGISTER_COMMAND = "INSCRIRE";
     public final static String LOAD_COMMAND = "CHARGER";
     private final ServerSocket server;
+    private final ArrayList<EventHandler> handlers;
     private Socket client;
     private ObjectInputStream objectInputStream;
     private ObjectOutputStream objectOutputStream;
-    private final ArrayList<EventHandler> handlers;
 
     /**
      * Crée une nouvelle instance de serveur qui écoute les connexions entrantes sur le port spécifié.
@@ -150,6 +149,7 @@ public class Server {
      * @param arg la session pour laquelle on veut récupérer la liste des cours
      */
     public void handleLoadCourses(String arg) {
+        System.out.println("Courses loading");
         ArrayList<Course> courses = new ArrayList<>();
         ArrayList<Course> filteredCourses = new ArrayList<>();
         try {
@@ -172,6 +172,7 @@ public class Server {
             }
 
             objectOutputStream.writeObject(filteredCourses);
+
             in.close();
 
         } catch (IOException e) {
@@ -191,11 +192,12 @@ public class Server {
             Course course = registrationForm.getCourse();
             BufferedReader in = new BufferedReader(new FileReader("src/main/java/server/data/cours.txt"));
             String str;
-            String result = "Course not found";
+            String result = "";
             while ((str = in.readLine()) != null) {
+
                 if (str.startsWith(course.getCode())) {
                     String session = str.split("\\s+")[2];
-                    result = "Course found";
+                    result = "Félicitations! Inscription réussie de " + registrationForm.getPrenom() + " au cours " + course.getCode() + ".";
                     course.setName(str.split("\\s+")[1]);
                     course.setSession(session);
 
@@ -205,7 +207,6 @@ public class Server {
                 }
             }
 
-            System.out.println(result);
             objectOutputStream.writeObject(result);
             in.close();
             fileWriter.flush();
