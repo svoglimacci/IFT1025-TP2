@@ -1,5 +1,7 @@
-package client;
+package client.client_fx;
 
+import client.Client;
+import server.models.Course;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
