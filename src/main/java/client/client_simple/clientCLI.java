@@ -8,11 +8,13 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class CLI {
+public class clientCLI {
 
     private final Client client;
+    private final static int PORT = 1337;
+    private final static String HOST_NAME = "127.0.0.1";
 
-    public CLI(String hostName, int port) throws IOException {
+    public clientCLI(String hostName, int port) throws IOException {
         client = new Client(hostName, port);
     }
 
@@ -115,5 +117,16 @@ public class CLI {
             }
         }
         return null;
+    }
+
+    public static void main(String[] args) {
+        clientCLI client;
+        try {
+            client = new clientCLI(HOST_NAME, PORT);
+            client.run();
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
     }
 }
