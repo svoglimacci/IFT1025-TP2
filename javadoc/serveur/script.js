@@ -56,7 +56,7 @@ function createElem(doc, tag, path) {
 // Helper for  making content containing release names comparable lexicographically
 function makeComparable(s) {
     return s.toLowerCase().replace(/(\d+)/g,
-        function (n, m) {
+        function(n, m) {
             return ("000" + m).slice(-4);
         });
 }
@@ -77,7 +77,7 @@ function sortTable(header, columnIndex, columns) {
     var container = header.parentElement;
     var descending = header.classList.contains(sortAsc);
     container.querySelectorAll("div.table-header").forEach(
-        function (header) {
+        function(header) {
             header.classList.remove(sortAsc);
             header.classList.remove(sortDesc);
         }
@@ -87,7 +87,7 @@ function sortTable(header, columnIndex, columns) {
     for (var i = columns; i < cells.length; i += columns) {
         rows.push(Array.prototype.slice.call(cells, i, i + columns));
     }
-    var comparator = function (a, b) {
+    var comparator = function(a, b) {
         var ka = makeComparable(a[columnIndex].textContent);
         var kb = makeComparable(b[columnIndex].textContent);
         if (ka < kb)
@@ -98,11 +98,11 @@ function sortTable(header, columnIndex, columns) {
     };
     var sorted = rows.sort(comparator);
     var visible = 0;
-    sorted.forEach(function (row) {
+    sorted.forEach(function(row) {
         if (row[0].style.display !== 'none') {
             var isEvenRow = visible++ % 2 === 0;
         }
-        row.forEach(function (cell) {
+        row.forEach(function(cell) {
             toggleStyle(cell.classList, isEvenRow, evenRowColor, oddRowColor);
             container.appendChild(cell);
         })
@@ -113,14 +113,14 @@ function sortTable(header, columnIndex, columns) {
 // Toggles the visibility of a table category in all tables in a page
 function toggleGlobal(checkbox, selected, columns) {
     var display = checkbox.checked ? '' : 'none';
-    document.querySelectorAll("div.table-tabs").forEach(function (t) {
+    document.querySelectorAll("div.table-tabs").forEach(function(t) {
         var id = t.parentElement.getAttribute("id");
         var selectedClass = id + "-tab" + selected;
         // if selected is empty string it selects all uncategorized entries
         var selectUncategorized = !Boolean(selected);
         var visible = 0;
         document.querySelectorAll('div.' + id)
-            .forEach(function (elem) {
+            .forEach(function(elem) {
                 if (selectUncategorized) {
                     if (elem.className.indexOf(selectedClass) === -1) {
                         elem.style.display = display;
@@ -141,12 +141,12 @@ function toggleGlobal(checkbox, selected, columns) {
 function show(tableId, selected, columns) {
     if (tableId !== selected) {
         document.querySelectorAll('div.' + tableId + ':not(.' + selected + ')')
-            .forEach(function (elem) {
+            .forEach(function(elem) {
                 elem.style.display = 'none';
             });
     }
     document.querySelectorAll('div.' + selected)
-        .forEach(function (elem, index) {
+        .forEach(function(elem, index) {
             elem.style.display = '';
             var isEvenRow = index % (columns * 2) < columns;
             toggleStyle(elem.classList, isEvenRow, evenRowColor, oddRowColor);
@@ -155,18 +155,18 @@ function show(tableId, selected, columns) {
 }
 
 function updateTabs(tableId, selected) {
-    document.querySelector('div#' + tableId + ' .summary-table')
+    document.querySelector('div#' + tableId +' .summary-table')
         .setAttribute('aria-labelledby', selected);
     document.querySelectorAll('button[id^="' + tableId + '"]')
-        .forEach(function (tab, index) {
+        .forEach(function(tab, index) {
             if (selected === tab.id || (tableId === selected && index === 0)) {
                 tab.className = activeTableTab;
                 tab.setAttribute('aria-selected', true);
-                tab.setAttribute('tabindex', 0);
+                tab.setAttribute('tabindex',0);
             } else {
                 tab.className = tableTab;
                 tab.setAttribute('aria-selected', false);
-                tab.setAttribute('tabindex', -1);
+                tab.setAttribute('tabindex',-1);
             }
         });
 }
@@ -188,8 +188,7 @@ function switchTab(e) {
     }
 }
 
-var updateSearchResults = function () {
-};
+var updateSearchResults = function() {};
 
 function indexFilesLoaded() {
     return moduleSearchIndex
@@ -198,13 +197,11 @@ function indexFilesLoaded() {
         && memberSearchIndex
         && tagSearchIndex;
 }
-
 // Copy the contents of the local snippet to the clipboard
 function copySnippet(button) {
     copyToClipboard(button.nextElementSibling.innerText);
     switchCopyLabel(button.firstElementChild, button.parentElement);
 }
-
 // Copy the link to the adjacent header to the clipboard
 function copyUrl(button) {
     var id;
@@ -214,7 +211,7 @@ function copyUrl(button) {
     } else if (header.parentElement.tagName === 'SECTION' && header.parentElement.hasAttribute("id")) {
         id = header.parentElement.getAttribute("id");
     } else if (header.firstElementChild && header.firstElementChild.tagName === "A"
-        && header.firstElementChild.hasAttribute("id")) {
+                                        && header.firstElementChild.hasAttribute("id")) {
         id = header.firstElementChild.getAttribute("id");
     }
     var url = document.location.href;
@@ -224,7 +221,6 @@ function copyUrl(button) {
     copyToClipboard(url + "#" + id);
     switchCopyLabel(button.lastElementChild, button.parentElement);
 }
-
 function copyToClipboard(content) {
     var textarea = document.createElement("textarea");
     textarea.style.height = 0;
@@ -234,35 +230,33 @@ function copyToClipboard(content) {
     document.execCommand("copy");
     document.body.removeChild(textarea);
 }
-
 function switchCopyLabel(span, parent) {
     var copied = span.getAttribute("data-copied");
     if (span.innerHTML !== copied) {
         var initialLabel = span.innerHTML;
         span.innerHTML = copied;
-        parent.onmouseleave = parent.ontouchend = function () {
+        parent.onmouseleave = parent.ontouchend = function() {
             span.innerHTML = initialLabel;
         };
     }
 }
-
 // Workaround for scroll position not being included in browser history (8249133)
-document.addEventListener("DOMContentLoaded", function (e) {
+document.addEventListener("DOMContentLoaded", function(e) {
     var contentDiv = document.querySelector("div.flex-content");
-    window.addEventListener("popstate", function (e) {
+    window.addEventListener("popstate", function(e) {
         if (e.state !== null) {
             contentDiv.scrollTop = e.state;
         }
     });
-    window.addEventListener("hashchange", function (e) {
+    window.addEventListener("hashchange", function(e) {
         history.replaceState(contentDiv.scrollTop, document.title);
     });
     var timeoutId;
-    contentDiv.addEventListener("scroll", function (e) {
+    contentDiv.addEventListener("scroll", function(e) {
         if (timeoutId) {
             clearTimeout(timeoutId);
         }
-        timeoutId = setTimeout(function () {
+        timeoutId = setTimeout(function() {
             history.replaceState(contentDiv.scrollTop, document.title);
         }, 100);
     });

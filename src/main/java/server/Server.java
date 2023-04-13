@@ -10,7 +10,7 @@ import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-/**
+/*
  * @author Simon Voglimacci Stephanopoli    20002825
  * @author Victor Leblond
  * @version 1.0
@@ -22,7 +22,13 @@ import java.util.Arrays;
  */
 public class Server {
 
+    /**
+     * String utilisé pour la commande Inscrire.
+     */
     public final static String REGISTER_COMMAND = "INSCRIRE";
+    /**
+     * String utilisé pour la commande Charger.
+     */
     public final static String LOAD_COMMAND = "CHARGER";
     private final ServerSocket server;
     private final ArrayList<EventHandler> handlers;
@@ -141,12 +147,10 @@ public class Server {
     }
 
     /**
-     * Lire un fichier texte contenant des informations sur les cours et les transofmer en liste d'objets 'Course'.
-     * La méthode filtre les cours par la session spécifiée en argument.
-     * Ensuite, elle renvoie la liste des cours pour une session au client en utilisant l'objet 'objectOutputStream'.
-     * La méthode gère les exceptions si une erreur se produit lors de la lecture du fichier ou de l'écriture de l'objet dans le flux.
+     * Traite les demandes de chargement de cours du client. Charge les cours du fichier 'cours.txt' et les envoie au client.
+     * seuls les cours de la session spécifiée dans l'argument sont envoyés au client.
      *
-     * @param arg la session pour laquelle on veut récupérer la liste des cours
+     * @param arg la session pour laquelle charger les cours.
      */
     public void handleLoadCourses(String arg) {
         System.out.println("Courses loading");
@@ -181,9 +185,8 @@ public class Server {
     }
 
     /**
-     * Récupérer l'objet 'RegistrationForm' envoyé par le client en utilisant 'objectInputStream', l'enregistrer dans un fichier texte
-     * et renvoyer un message de confirmation au client.
-     * La méthode gére les exceptions si une erreur se produit lors de la lecture de l'objet, l'écriture dans un fichier ou dans le flux de sortie.
+     * Traite les demandes d'inscription reçues du client, envoie une réponse approprié au client et enregistre les informations de l'inscription dans un fichier.
+     *
      */
     public void handleRegistration() {
         try {
