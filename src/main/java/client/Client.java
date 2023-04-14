@@ -28,7 +28,7 @@ public class Client {
         ArrayList<Course> courses = null;
         try {
             openSocket();
-            String msg = "CHARGER " + currentSession;
+            String msg = LOAD_COMMAND + currentSession;
             objectOutputStream.writeObject(msg);
             courses = (ArrayList<Course>) objectInputStream.readObject();
             closeSocket();

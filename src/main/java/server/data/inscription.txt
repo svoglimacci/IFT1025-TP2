@@ -1,2 +1,3 @@
 Automne	IFT2255	12345678	Michalis	Famelis	mfamelis@iro.umontreal.ca
 
+Automne	IFT2255	20002825	Simon	Voglimacci	s.voglimacci@tuta.io
