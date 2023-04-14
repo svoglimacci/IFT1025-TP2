@@ -30,10 +30,6 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class clientApplication extends Application {
 
-    public static Socket createSocket(String hostName, int port) throws IOException {
-        return new Socket(hostName, port);
-    }
-
     public static void main(String[] args) throws IOException {
 
         launch();
@@ -41,13 +37,11 @@ public class clientApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
         URL fxmlURL = getClass().getResource("/client-view.fxml");
-
         FXMLLoader fxmlLoader = new FXMLLoader();
         fxmlLoader.setLocation(fxmlURL);
         Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root,600,400);
-
         stage.setScene(scene);
         stage.show();
     }
