@@ -49,7 +49,7 @@ public class Client {
         if (lastName.equals("")) {
             errors.add("Le nom est invalide.");
         }
-        if (!(email.matches("^[A-Za-z0-9+_.-]+@(.+)$"))) {
+        if (!(email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$"))) {
             errors.add("L'email est invalide.");
         }
         if (!(matricule.matches("^([0-9]{8})"))) {
