@@ -5,3 +5,9 @@ Automne	IFT1227	12345678	2	3	so@gmail.com
 Automne	IFT1227	12345678	2	3	so@gmail.com
 Automne	IFT1227	12345678	Vic	Leblond	stoui@gmail.com
 Automne	IFT1227	12345678	Vic	Leblond	stoui@gmail.com
+Automne	IFT1015	20002825	Simon	Voglimacci	s.voglimacci@tuta.io
+Automne	IFT1015	20002825	Simon	Voglimacci	s.voglimacci@tuta.io
+Automne	IFT1227	20002825	Simon	Voglimacci	s.voglimacci@tuta.io
+Hiver	IFT1025	20002825	Simon	Voglimacci	s.voglimacci@tuta.io
+Automne	IFT1227	20002825	Simon	Voglimacci	s.voglimacci@tuta.io
+Automne	IFT1227	20002825	Simon	Voglimacci	s.vogli@hh
