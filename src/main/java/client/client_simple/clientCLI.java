@@ -6,6 +6,7 @@ import server.models.Course;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.Objects;
 import java.util.Scanner;
 
 public class clientCLI {
@@ -15,7 +16,7 @@ public class clientCLI {
     private final static String HOST_NAME = "127.0.0.1";
 
     public clientCLI(String hostName, int port) throws IOException {
-        client = new Client(hostName, port);
+        this.client = new Client(hostName, port);
     }
 
     public void run() throws IOException {
@@ -29,7 +30,7 @@ public class clientCLI {
                 switch (menuChoice) {
                     case 1 -> {
                         currentSession = coursesMenu(sc);
-                        if (currentSession != "") {
+                        if (!Objects.equals(currentSession, "")) {
                             System.out.println("Les cours offerts pendant la session d'" + currentSession.toLowerCase() + " sont:");
                             courses = client.loadCourses(currentSession);
                             for (Course course : courses) {
@@ -50,11 +51,9 @@ public class clientCLI {
                     }
                 }
                 //if currentSession is not empty, then we can display the main menu, else coursesMenu(sc)
-                if (currentSession != "") {
+                if (!currentSession.equals("")) {
                     mainMenu();
                     menuChoice = sc.nextInt();
-                } else {
-                    menuChoice = 1;
                 }
 
             } catch (InputMismatchException | ClassNotFoundException e) {
@@ -71,7 +70,7 @@ public class clientCLI {
         System.out.print("> Choix: ");
     }
 
-    private String coursesMenu(Scanner sc) throws IOException, ClassNotFoundException {
+    private String coursesMenu(Scanner sc) throws ClassNotFoundException {
 
         System.out.println("Veuillez choisir la session pour laquelle vous voulez consulter la liste des cours:");
         System.out.println("1. Automne");
