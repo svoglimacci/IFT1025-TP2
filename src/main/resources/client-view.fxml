@@ -53,6 +53,9 @@
                                        <String fx:value="Ete" />
                                     </FXCollections>
                                  </items>
+                                 <value>
+                                    <String fx:value="Automne" />
+                                 </value>
                               </ComboBox>
                               <Button fx:id="chargerButton" mnemonicParsing="false" onAction="#chargerSession" text="Charger" />
                            </children>

@@ -1,21 +1,31 @@
 package client.client_fx;
 
 import client.Client;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Popup;
 import server.models.Course;
 
 import java.io.IOException;
 
-public class clientController {
-    @FXML private ComboBox boxSession;
-    @FXML private Button chargerButton;
+/*
+ * @author Simon Voglimacci Stephanopoli    20002825
+ * @author Victor Leblond 20244841
+ * @version 1.0
+ * @since 2023-03-30
+ */
 
+
+/**
+ * La classe clientController s'occupe de la logique derrière les éléments FXML du GUI
+ */
+public class clientController {
+
+    /*
+    * Références aux éléments présent dans le GUI
+     */
+    @FXML private ComboBox boxSession;
     @FXML private TableView<Course> tableCours;
     @FXML private TableColumn<Course, String> codeColone;
     @FXML private TableColumn<Course, String> nomColone;
@@ -30,28 +40,25 @@ public class clientController {
 
     private Client client;
 
-    //@FXML private Label
+    /**
+     * La fonction est appelé lorsque le fichier FXML est bien 'loadé' par clientApplication. La fonction crée un client et
+     * 'set' la propriété des colonnes du tableau des cours.
+     */
     @FXML
     public void initialize() {
         try {
             client = new Client(HOST_NAME,PORT);
-            run();
+            codeColone.setCellValueFactory(new PropertyValueFactory<Course, String>("code"));
+            nomColone.setCellValueFactory(new PropertyValueFactory<Course, String>("name"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public void run()throws IOException{
-        codeColone.setCellValueFactory(new PropertyValueFactory<Course, String>("code"));
-        nomColone.setCellValueFactory(new PropertyValueFactory<Course, String>("name"));
-        boxSession.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
-            @Override
-            public void changed(ObservableValue<? extends String> selected, String oldFruit, String newFruit) {
-
-            }
-        });
-    }
-
+    /**
+     * La fonction chargerSession rafraîchit le TableView des cours avec les cours de cours.txt
+     * @throws IOException
+     */
     public void chargerSession() throws IOException {
         String currentSession = boxSession.getSelectionModel().selectedItemProperty().getValue().toString();
 
@@ -60,6 +67,13 @@ public class clientController {
         tableCours.refresh();
     }
 
+    /**
+    *   La fonction inscrireCours prend en compte les TextFields ainsi que le cours sélectionné
+     *  et incrit le client à son cours. La fonction affiche une alerte soit d'érreure ou d'information
+     *  dépendament de si l'inscription est réussite ou non.
+     *  @throws IOException
+     *  @throws ClassNotFoundException
+     */
     public void inscrireCours() throws IOException, ClassNotFoundException {
         String prenomText = prenomField.getText();
         String nomText = nomField.getText();
@@ -69,20 +83,22 @@ public class clientController {
         Course selectedCourse = tableCours.getSelectionModel().getSelectedItem();
 
         String output = client.register(prenomText,nomText,emailText,matriculeText,selectedCourse);
-
+        Alert alert = new Alert(Alert.AlertType.NONE);
         if(output.contains("Félicitations!")){
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Message");
-            alert.setHeaderText("Message");
-            alert.setContentText(output);
-            alert.showAndWait();
+            alert.setAlertType(Alert.AlertType.INFORMATION);
+
+            prenomField.clear();
+            nomField.clear();
+            emailField.clear();
+            matriculeField.clear();
         }else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Error");
-            alert.setHeaderText("Error");
-            alert.setContentText(output);
-            alert.showAndWait();
+            alert.setAlertType(Alert.AlertType.ERROR);
         }
+
+        alert.setTitle("Message");
+        alert.setHeaderText("Message");
+        alert.setContentText(output);
+        alert.showAndWait();
     }
 
 }

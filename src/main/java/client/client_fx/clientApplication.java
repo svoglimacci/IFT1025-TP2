@@ -1,40 +1,38 @@
 package client.client_fx;
 
-import client.Client;
-import client.client_simple.clientCLI;
-import server.models.Course;
 import javafx.application.Application;
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import server.models.Course;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.net.Socket;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.concurrent.atomic.AtomicReference;
 
+/*
+ * @author Simon Voglimacci Stephanopoli    20002825
+ * @author Victor Leblond 20244841
+ * @version 1.0
+ * @since 2023-03-30
+ */
+
+
+/**
+ * La classe clientApplication contient la fonction {@link #main(String[] args)} et lance l'application
+ */
 public class clientApplication extends Application {
 
     public static void main(String[] args) throws IOException {
 
         launch();
     }
+
+    /**
+     * La fonction start 'load' le fichier FXML et lance l'application
+     * @param stage
+     * @throws IOException
+     * @throws ClassNotFoundException
+     */
     @Override
     public void start(Stage stage) throws IOException, ClassNotFoundException {
         URL fxmlURL = getClass().getResource("/client-view.fxml");

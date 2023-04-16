@@ -12,7 +12,7 @@ import java.util.Arrays;
 
 /*
  * @author Simon Voglimacci Stephanopoli    20002825
- * @author Victor Leblond
+ * @author Victor Leblond 20244841
  * @version 1.0
  * @since 2023-03-30
  */
