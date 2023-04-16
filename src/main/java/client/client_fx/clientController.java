@@ -5,11 +5,9 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.Popup;
 import server.models.Course;
 
 import java.io.IOException;
@@ -21,6 +19,12 @@ public class clientController {
     @FXML private TableView<Course> tableCours;
     @FXML private TableColumn<Course, String> codeColone;
     @FXML private TableColumn<Course, String> nomColone;
+
+    @FXML private TextField prenomField;
+    @FXML private TextField nomField;
+    @FXML private TextField emailField;
+    @FXML private TextField matriculeField;
+
     private final static int PORT = 1337;
     private final static String HOST_NAME = "127.0.0.1";
 
@@ -49,15 +53,36 @@ public class clientController {
     }
 
     public void chargerSession() throws IOException {
-
-
         String currentSession = boxSession.getSelectionModel().selectedItemProperty().getValue().toString();
-        System.out.println(client.loadCourses(currentSession));
-
 
         tableCours.getItems().clear();
         tableCours.setItems(FXCollections.observableList(client.loadCourses(currentSession)));
         tableCours.refresh();
+    }
+
+    public void inscrireCours() throws IOException, ClassNotFoundException {
+        String prenomText = prenomField.getText();
+        String nomText = nomField.getText();
+        String emailText = emailField.getText();
+        String matriculeText = matriculeField.getText();
+
+        Course selectedCourse = tableCours.getSelectionModel().getSelectedItem();
+
+        String output = client.register(prenomText,nomText,emailText,matriculeText,selectedCourse);
+
+        if(output.contains("Félicitations!")){
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Message");
+            alert.setHeaderText("Message");
+            alert.setContentText(output);
+            alert.showAndWait();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Error");
+            alert.setContentText(output);
+            alert.showAndWait();
+        }
     }
 
 }

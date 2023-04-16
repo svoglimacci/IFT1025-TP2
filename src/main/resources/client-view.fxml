@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -10,71 +12,113 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<?import javafx.collections.FXCollections?>
-<?import java.lang.String?>
-<VBox alignment="CENTER" spacing="30.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.client_fx.clientController">
-    <padding>
-        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-    </padding>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="client.client_fx.clientController">
    <children>
-      <HBox prefHeight="400.0" prefWidth="600.0">
+      <VBox alignment="TOP_CENTER" spacing="30.0">
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
          <children>
-            <VBox prefHeight="200.0" prefWidth="300.0">
+            <HBox prefHeight="400.0" prefWidth="600.0">
                <children>
-                  <TableView fx:id="tableCours" editable="true" fixedCellSize="40" prefHeight="200.0" prefWidth="200.0">
-                     <columns>
-                        <TableColumn fx:id="codeColone" prefWidth="100.0" text="Code" />
-                        <TableColumn fx:id="nomColone" minWidth="9.333343505859375" prefWidth="199.33334350585938" text="Cours" />
-                     </columns>
-                  </TableView>
-                  <HBox prefHeight="100.0" prefWidth="285.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="300.0">
                      <children>
-                        <ComboBox fx:id="boxSession" prefWidth="150.0">
-                           <items>
-                              <FXCollections fx:factory="observableArrayList">
-                                 <String fx:value="Automne" />
-                                 <String fx:value="Hiver" />
-                                 <String fx:value="Ete" />
-                              </FXCollections>
-                        </items></ComboBox>
-                        <Button mnemonicParsing="false" text="Charger" onAction="#chargerSession"/>
+                        <Label prefHeight="30.0" prefWidth="55.0" text="Cours">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <TableView fx:id="tableCours" editable="true" fixedCellSize="40" prefHeight="339.0" prefWidth="300.0">
+                           <columns>
+                              <TableColumn fx:id="codeColone" prefWidth="100.0" text="Code" />
+                              <TableColumn fx:id="nomColone" minWidth="9.333343505859375" prefWidth="199.33334350585938" text="Cours" />
+                           </columns>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </TableView>
+                        <HBox prefHeight="100.0" prefWidth="285.0">
+                           <children>
+                              <ComboBox fx:id="boxSession" prefWidth="150.0">
+                                 <items>
+                                    <FXCollections fx:factory="observableArrayList">
+                                       <String fx:value="Automne" />
+                                       <String fx:value="Hiver" />
+                                       <String fx:value="Ete" />
+                                    </FXCollections>
+                                 </items>
+                              </ComboBox>
+                              <Button fx:id="chargerButton" mnemonicParsing="false" onAction="#chargerSession" text="Charger" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
                      </children>
-                  </HBox>
+                  </VBox>
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="293.0">
+                     <children>
+                        <Label text="Inscription">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Label>
+                        <HBox>
+                           <children>
+                              <Label maxWidth="Infinity" text="Prenom :" HBox.hgrow="ALWAYS" />
+                              <TextField  fx:id="prenomField" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label maxWidth="Infinity" text="Nom :" HBox.hgrow="ALWAYS" />
+                              <TextField  fx:id="nomField"/>
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label maxWidth="Infinity" text="Email :" HBox.hgrow="ALWAYS" />
+                              <TextField  fx:id="emailField" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <Label maxWidth="Infinity" text="Matricule :" HBox.hgrow="ALWAYS" />
+                              <TextField  fx:id="matriculeField" />
+                           </children>
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <Button alignment="CENTER" contentDisplay="CENTER" onAction="#inscrireCours" mnemonicParsing="false" text="Envoyer" textAlignment="CENTER">
+                           <VBox.margin>
+                              <Insets bottom="10.0" top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                  </VBox>
                </children>
-            </VBox>
-            <Separator orientation="VERTICAL" prefHeight="200.0" />
-            <VBox prefHeight="200.0" prefWidth="200.0">
-               <children>
-                  <Label text="Inscription" />
-                  <HBox>
-                     <children>
-                        <Label maxWidth="Infinity" text="Prenom :" HBox.hgrow="ALWAYS" />
-                        <TextField />
-                     </children>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label maxWidth="Infinity" text="Prenom :" HBox.hgrow="ALWAYS" />
-                        <TextField />
-                     </children>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label maxWidth="Infinity" text="Prenom :" HBox.hgrow="ALWAYS" />
-                        <TextField />
-                     </children>
-                  </HBox>
-                  <HBox>
-                     <children>
-                        <Label maxWidth="Infinity" text="Prenom :" HBox.hgrow="ALWAYS" />
-                        <TextField />
-                     </children>
-                  </HBox>
-                  <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" text="Envoyer" textAlignment="CENTER" />
-               </children>
-            </VBox>
+            </HBox>
          </children>
-      </HBox>
+      </VBox>
    </children>
 </VBox>
