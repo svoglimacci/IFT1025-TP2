@@ -22,10 +22,10 @@
          <children>
             <VBox prefHeight="200.0" prefWidth="300.0">
                <children>
-                  <TableView editable="true" fixedCellSize="7.0" prefHeight="200.0" prefWidth="200.0">
+                  <TableView fx:id="tableCours" editable="true" fixedCellSize="40" prefHeight="200.0" prefWidth="200.0">
                      <columns>
-                        <TableColumn prefWidth="100.0" text="Code" />
-                        <TableColumn minWidth="9.333343505859375" prefWidth="199.33334350585938" text="Cours" />
+                        <TableColumn fx:id="codeColone" prefWidth="100.0" text="Code" />
+                        <TableColumn fx:id="nomColone" minWidth="9.333343505859375" prefWidth="199.33334350585938" text="Cours" />
                      </columns>
                   </TableView>
                   <HBox prefHeight="100.0" prefWidth="285.0">

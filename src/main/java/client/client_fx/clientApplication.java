@@ -1,6 +1,7 @@
 package client.client_fx;
 
 import client.Client;
+import client.client_simple.clientCLI;
 import server.models.Course;
 import javafx.application.Application;
 import javafx.beans.binding.Bindings;
