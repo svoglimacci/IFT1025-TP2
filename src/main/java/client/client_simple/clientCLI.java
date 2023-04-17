@@ -9,16 +9,36 @@ import java.util.InputMismatchException;
 import java.util.Objects;
 import java.util.Scanner;
 
+/**
+ * La classe clientCLI est une implémentation d'un client de ligne de commande qui sert d'interface à la classe Client.
+ */
 public class clientCLI {
 
     private final Client client;
+    /**
+     * String utilisé pour la commande Inscrire.
+     */
     private final static int PORT = 1337;
+
+    /**
+     * String utilisé pour le nom d'hôte.
+     */
     private final static String HOST_NAME = "127.0.0.1";
 
+    /**
+     * Crée une nouvelle instance de clientCLI qui se connecte au serveur spécifié.
+     * @param hostName l'addresse ip ou nom d'hôte du serveur
+     * @param port le numéro de port du serveur
+     * @throws IOException si une erreur d'I/O survient lors de la création du socket client
+     */
     public clientCLI(String hostName, int port) throws IOException {
         this.client = new Client(hostName, port);
     }
 
+    /**
+     * Démarre le client, affiche le menu et gère les choix de l'utilisateur par des appels aux méthodes de Client appropriées.
+     * @throws IOException
+     */
     public void run() throws IOException {
         String currentSession = "";
         ArrayList<Course> courses = null;
@@ -56,13 +76,16 @@ public class clientCLI {
                     menuChoice = sc.nextInt();
                 }
 
-            } catch (InputMismatchException | ClassNotFoundException e) {
+            } catch (InputMismatchException e) {
                 System.out.println("Choix invalide");
                 sc.next();
             }
         }
     }
 
+    /**
+     * Affiche le menu principal.
+     */
     private void mainMenu() {
         System.out.println("\n1. Consulter les cours offerts pour une autre session");
         System.out.println("2. Inscription à un cours");
@@ -70,7 +93,12 @@ public class clientCLI {
         System.out.print("> Choix: ");
     }
 
-    private String coursesMenu(Scanner sc) throws ClassNotFoundException {
+    /**
+     * Affiche le menu pour choisir la session et retourne la session choisie.
+     * @param sc le scanner utilisé pour lire les entrées de l'utilisateur
+     * @return la session choisie
+     */
+    private String coursesMenu(Scanner sc) {
 
         System.out.println("Veuillez choisir la session pour laquelle vous voulez consulter la liste des cours:");
         System.out.println("1. Automne");
@@ -93,7 +121,12 @@ public class clientCLI {
         return choice;
     }
 
-    private void registerMenu(Scanner sc, ArrayList<Course> courses) throws IOException, ClassNotFoundException {
+    /**
+     * Affiche le menu pour inscrire un étudiant à un cours.
+     * @param sc le scanner utilisé pour lire les entrées de l'utilisateur
+     * @param courses la liste des cours offerts pendant la session courante
+     */
+    private void registerMenu(Scanner sc, ArrayList<Course> courses) {
         String response;
         System.out.print("Veuillez saisir votre prénom: ");
         String firstName = sc.next();
@@ -109,6 +142,13 @@ public class clientCLI {
         System.out.println(response);
     }
 
+    /**
+     * Retourne le cours dont le code est spécifié.
+     * @param code le code du cours
+     * @param courses la liste des cours offerts pendant la session courante
+     * @return le cours dont le code est spécifié
+     */
+
     private Course getCourse(String code, ArrayList<Course> courses) {
         for (Course course : courses) {
             if (course.getCode().equals(code)) {
@@ -118,6 +158,10 @@ public class clientCLI {
         return null;
     }
 
+    /**
+     * Point d'entrée du programme. Crée une nouvelle instance de clientCLI et l'exécute.
+     * @param args les arguments de la ligne de commande
+     */
     public static void main(String[] args) {
         clientCLI client;
         try {

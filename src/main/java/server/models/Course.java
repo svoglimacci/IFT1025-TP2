@@ -38,6 +38,7 @@ public class Course implements Serializable {
         this.session = session;
     }
 
+
     @Override
     public String toString() {
         return "Course{" +
