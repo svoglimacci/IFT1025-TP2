@@ -24,7 +24,7 @@ public class clientApplication extends Application {
 
     public static void main(String[] args) throws IOException {
 
-        launch();
+        launch(args);
     }
 
     /**
