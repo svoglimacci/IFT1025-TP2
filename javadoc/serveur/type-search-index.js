@@ -1,1 +1,1 @@
-typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"server","l":"EventHandler"},{"p":"server","l":"Server"},{"p":"server","l":"ServerLauncher"}];updateSearchResults();
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"client","l":"Client"},{"p":"client.client_fx","l":"clientApplication"},{"p":"client.client_simple","l":"clientCLI"},{"p":"server.models","l":"Course"},{"p":"server","l":"EventHandler"},{"p":"server.models","l":"RegistrationForm"},{"p":"server","l":"Server"}];updateSearchResults();

@@ -42,7 +42,7 @@ public class Client {
     /**
      * charge les cours disponibles selon la session en paramêtre et les retourne.
      * @param currentSession la session courante
-     * @return ArrayList<Course> la liste des cours disponibles
+     * @return la liste des cours disponibles
      */
     public ArrayList<Course> loadCourses(String currentSession) {
         ArrayList<Course> courses = null;

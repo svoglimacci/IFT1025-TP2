@@ -3,6 +3,8 @@ package server.models;
 import java.io.Serializable;
 
 public class RegistrationForm implements Serializable {
+
+
     private String prenom;
     private String nom;
     private String email;
