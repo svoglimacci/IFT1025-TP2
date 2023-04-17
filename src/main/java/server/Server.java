@@ -79,6 +79,7 @@ public class Server {
         while (true) {
             try {
                 client = server.accept();
+
                 System.out.println("Connecté au client: " + client);
                 objectInputStream = new ObjectInputStream(client.getInputStream());
                 objectOutputStream = new ObjectOutputStream(client.getOutputStream());
